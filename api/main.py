@@ -73,5 +73,3 @@ async def predict_tomato(file: UploadFile = File(...)):
     return {"class": predicted_class, "confidence": f"{float(confidence*100)}%"}
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, port=8000)
