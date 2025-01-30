@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 from io import BytesIO
 from PIL import Image
-import tensorflow as tf
+import keras
 
 app = FastAPI()
 
@@ -25,8 +25,8 @@ def read_root():
     return {"Green Spark": "PlantAid"}
 
 
-potato_model = tf.keras.models.load_model("./models/potato/4/model.keras")
-tomato_model = tf.keras.models.load_model("./models/tomato/1/model.keras")
+potato_model = keras.models.load_model("./models/potato/4/model.keras")
+tomato_model = keras.models.load_model("./models/tomato/1/model.keras")
 
 potato_class = ["Early Blight", "Late Blight", "Healthy"]
 tomato_class = [
@@ -70,5 +70,3 @@ async def predict_tomato(file: UploadFile = File(...)):
     predicted_class = tomato_class[np.argmax(predictions[0])]
     confidence = np.max(predictions[0])
     return {"class": predicted_class, "confidence": f"{float(confidence*100)}%"}
-
-
